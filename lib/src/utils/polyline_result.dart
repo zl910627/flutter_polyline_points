@@ -51,8 +51,8 @@ class PolylineResult {
         if (bound != null) {
           result.bounds = Bound(
             PointLatLng(
-              double.tryParse(bound['northest']['lat']),
-              double.tryParse(bound['northest']['lng']),
+              double.tryParse(bound['northeast']['lat']),
+              double.tryParse(bound['northeast']['lng']),
             ),
             PointLatLng(
               double.tryParse(bound['southwest']['lat']),
