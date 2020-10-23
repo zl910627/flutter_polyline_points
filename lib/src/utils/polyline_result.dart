@@ -33,6 +33,17 @@ class PolylineResult {
 
   PolylineResult({this.status, this.points = const [], this.errorMessage = ""});
 
+  PointLatLng get midPoint {
+    final mid = bounds.midPoint;
+    final list = points.map((e) {
+       return <String, dynamic>{
+         'distance': e.distance(mid),
+         'point': e,
+        };
+    }).toList()..sort((a, b) => (a['distance'] - b['distance']));
+    return list.first['point'];
+  }
+
   static PolylineResult parseResposne(Response response) {
     final result = PolylineResult();
 
