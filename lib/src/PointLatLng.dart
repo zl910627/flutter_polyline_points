@@ -13,10 +13,10 @@ class PointLatLng {
         this.longitude = longitude;
 
   /// The latitude in degrees.
-  final int latitude;
+  final double latitude;
 
   /// The longitude in degrees
-  final int longitude;
+  final double longitude;
 
   @override
   String toString() {

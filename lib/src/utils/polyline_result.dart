@@ -23,10 +23,10 @@ class PolylineResult {
   Bound bounds;
 
   /// Distance In Meter
-  double distance;
+  int distance;
 
   /// Duration in seconds
-  double duration;
+  int duration;
 
   /// the error message returned from google, if none, the result will be empty
   String errorMessage;
