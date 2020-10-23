@@ -40,7 +40,11 @@ class PolylineResult {
          'distance': e.distance(mid),
          'point': e,
         };
-    }).toList()..sort((a, b) => (a['distance'] - b['distance']).toInt());
+    }).toList()..sort((a, b) {
+      if (a['distance'] < b['distance']) return -1;
+      if (a['distance'] > b['distance']) return 1;
+      return 0;
+    });
     return list.first['point'];
   }
 
