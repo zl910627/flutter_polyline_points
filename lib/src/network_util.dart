@@ -12,19 +12,20 @@ class NetworkUtil {
 
   ///Get the encoded string from google directions api
   ///
-  Future<PolylineResult> getRouteBetweenCoordinates(
-      String googleApiKey,
-      PointLatLng origin,
-      PointLatLng destination,
-      TravelMode travelMode,
-      List<PolylineWayPoint> wayPoints,
-      bool avoidHighways,
-      bool avoidTolls,
-      bool avoidFerries,
-      bool optimizeWaypoints) async {
+  static Future<PolylineResult> getRouteBetweenCoordinates(
+    String googleApiKey,
+    PointLatLng origin,
+    PointLatLng destination,
+    TravelMode travelMode,
+    List<PolylineWayPoint> wayPoints,
+    bool avoidHighways,
+    bool avoidTolls,
+    bool avoidFerries,
+    bool optimizeWaypoints,
+  ) async {
     String mode = travelMode.toString().replaceAll('TravelMode.', '');
     PolylineResult result = PolylineResult();
-    var params = {
+    final params = {
       "origin": "${origin.latitude},${origin.longitude}",
       "destination": "${destination.latitude},${destination.longitude}",
       "mode": mode,
@@ -42,32 +43,23 @@ class NetworkUtil {
       }
       params.addAll({"waypoints": wayPointsString});
     }
-    Uri uri =
-        Uri.https("maps.googleapis.com", "maps/api/directions/json", params);
+    final uri = Uri.https("maps.googleapis.com", "maps/api/directions/json", params);
 
     String url = uri.toString();
     // print('GOOGLE MAPS URL: ' + url);
     var response = await http.get(url);
     if (response?.statusCode == 200) {
       var parsedJson = json.decode(response.body);
-      result.status = parsedJson["status"];
-      if (parsedJson["status"]?.toLowerCase() == STATUS_OK &&
-          parsedJson["routes"] != null &&
-          parsedJson["routes"].isNotEmpty) {
-        result.points = decodeEncodedPolyline(
-            parsedJson["routes"][0]["overview_polyline"]["points"]);
-      } else {
-        result.errorMessage = parsedJson["error_message"];
-      }
+      return PolylineResult.parseResposne(parsedJson);
     }
-    return result;
+    return PolylineResult();
   }
 
   ///decode the google encoded string using Encoded Polyline Algorithm Format
   /// for more info about the algorithm check https://developers.google.com/maps/documentation/utilities/polylinealgorithm
   ///
   ///return [List]
-  List<PointLatLng> decodeEncodedPolyline(String encoded) {
+  static List<PointLatLng> decodeEncodedPolyline(String encoded) {
     List<PointLatLng> poly = [];
     int index = 0, len = encoded.length;
     int lat = 0, lng = 0;

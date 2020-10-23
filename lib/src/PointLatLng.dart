@@ -23,3 +23,16 @@ class PointLatLng {
     return "lat: $latitude / longitude: $longitude";
   }
 }
+
+class Bound {
+ Bound(this.northeast, this.southwest);
+
+  final PointLatLng northeast;
+
+  final PointLatLng southwest;
+
+  @override
+  String toString() {
+    return "northeast: $northeast / southwest: $southwest";
+  }
+}
