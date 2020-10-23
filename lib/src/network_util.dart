@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../src/utils/polyline_waypoint.dart';
 import '../src/utils/request_enums.dart';
 import '../src/PointLatLng.dart';
@@ -24,7 +22,6 @@ class NetworkUtil {
     bool optimizeWaypoints,
   ) async {
     String mode = travelMode.toString().replaceAll('TravelMode.', '');
-    PolylineResult result = PolylineResult();
     final params = {
       "origin": "${origin.latitude},${origin.longitude}",
       "destination": "${destination.latitude},${destination.longitude}",
