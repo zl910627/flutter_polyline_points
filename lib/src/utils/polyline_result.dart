@@ -46,21 +46,24 @@ class PolylineResult {
         result.points = NetworkUtil.decodeEncodedPolyline(
           route["overview_polyline"]["points"],
         );
-        result.bounds = Bound(
-          PointLatLng(
-            double.tryParse(route['bounds']['northest']['lat']),
-            double.tryParse(route['bounds']['northest']['lng']),
-          ),
-          PointLatLng(
-            double.tryParse(route['bounds']['southwest']['lat']),
-            double.tryParse(route['bounds']['southwest']['lng']),
-          ),
-        );
+
+        final bound = route['bounds'];
+        if (bound != null) {
+          result.bounds = Bound(
+            PointLatLng(
+              double.tryParse(bound['northest']['lat']),
+              double.tryParse(bound['northest']['lng']),
+            ),
+            PointLatLng(
+              double.tryParse(bound['southwest']['lat']),
+              double.tryParse(bound['southwest']['lng']),
+            ),
+          );
+        }
 
         final leg = route['legs'][0];
         result.distance = double.tryParse(leg['distance']['value']);
         result.duration = double.tryParse(leg['duration']['value']);
-        
       } else {
         result.errorMessage = parsedJson["error_message"];
       }
