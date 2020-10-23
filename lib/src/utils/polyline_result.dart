@@ -51,19 +51,19 @@ class PolylineResult {
         if (bound != null) {
           result.bounds = Bound(
             PointLatLng(
-              double.tryParse(bound['northeast']['lat']),
-              double.tryParse(bound['northeast']['lng']),
+              bound['northeast']['lat'],
+              bound['northeast']['lng'],
             ),
             PointLatLng(
-              double.tryParse(bound['southwest']['lat']),
-              double.tryParse(bound['southwest']['lng']),
+              bound['southwest']['lat'],
+              bound['southwest']['lng'],
             ),
           );
         }
 
         final leg = route['legs'][0];
-        result.distance = double.tryParse(leg['distance']['value']);
-        result.duration = double.tryParse(leg['duration']['value']);
+        result.distance = leg['distance']['value'];
+        result.duration = leg['duration']['value'];
       } else {
         result.errorMessage = parsedJson["error_message"];
       }
