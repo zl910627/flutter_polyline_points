@@ -47,12 +47,8 @@ class NetworkUtil {
 
     String url = uri.toString();
     // print('GOOGLE MAPS URL: ' + url);
-    var response = await http.get(url);
-    if (response?.statusCode == 200) {
-      var parsedJson = json.decode(response.body);
-      return PolylineResult.parseResposne(parsedJson);
-    }
-    return PolylineResult();
+    final response = await http.get(url);
+    return PolylineResult.parseResposne(response);
   }
 
   ///decode the google encoded string using Encoded Polyline Algorithm Format
